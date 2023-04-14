@@ -2,7 +2,7 @@ import os
 import discord
 from dotenv import load_dotenv
 import requests
-
+import recognize
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -31,19 +31,45 @@ imagefiles = ['bmp','jpeg','jpg','png']
 @client.event
 
 async def on_message(message):
-    print("meddelande mottaget")
+
+
+    if message.content.startswith("Svart"):
+        move = "b"
+        print("black")
+    elif message.content.startswith("svart"):
+        move ="b"
+        print("blacker")
+    elif message.content.startswith("Vit"):
+        move = "w"
+        print("white")
+    elif message.content.startswith("vit"):
+        move="w"
+        print("whiter")
+    else:
+        print("buuh")
+        move =""
+    print(move)
     attachments = message.attachments
     if len(attachments) > 0:
         url = message.attachments[0].url
         if url[-3:] in imagefiles:
             ending = url[-3:] #filändelsen.
             r = requests.get(url, allow_redirects=True)
-            open("../brdtofen/image."+ending, "wb").write(r.content)
+            
+            open("image."+ending, "wb").write(r.content)
 
-            os.system("python3 ../brdtofen/recognize.py image."+ending)
+            os.system("python3 recognize.py image."+ending)
+            os.remove("image."+ending) #raderar filen av utrymmesskäl.
 
-#Nu ska filen skickas till analys, raderas, och den genererade
-#FEN-strängen ska skickas till Lichess API.
+#FEN är nu sparad i txt-filen "fentext.txt".
+            with open("fentext.txt", "r") as file:
+                fen = file.read()
+                analysis_url = "https://www.lichess.org/analysis/"+fen+"%20"+move
+
+            await message.channel.send("Analysera ställningen här: " + analysis_url)
+
+#Nu ska den genererade FEN-strängen ska skickas till Lichess API. På något sätt ska
+#vi också ange om svart eller vit är vid draget.
 
 
 client.run(TOKEN)
