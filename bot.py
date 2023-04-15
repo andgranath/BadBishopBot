@@ -31,7 +31,7 @@ imagefiles = ['bmp','jpeg','jpg','png']
 
 async def on_message(message):
 
-
+#if-else tolkar om svart eller vit är vid draget.
     if message.content.startswith("Svart"):
         move = "b"
     elif message.content.startswith("svart"):
@@ -63,8 +63,7 @@ async def on_message(message):
 
             await message.channel.send("Analysera ställningen här: " + analysis_url)
 
-#Nu ska den genererade FEN-strängen ska skickas till Lichess API. På något sätt ska
-#vi också ange om svart eller vit är vid draget.
+
 
 
 client.run(TOKEN)
