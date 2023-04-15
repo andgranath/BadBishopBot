@@ -1,3 +1,6 @@
+# BadBishopBot
+Bot.py contains the code for the bot. The diagram sacn is done by Brdtofen, the only changes done to their code is cleaning up the output and saving the FEN to a .txt file. If you want to scan diagrams locally, please visit Brdtofen and download their repository.
+
 # Brdtofen
 
 Uses a convolutional neural network to recognize the positions of pieces
