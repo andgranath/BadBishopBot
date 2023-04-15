@@ -2,7 +2,6 @@ import os
 import discord
 from dotenv import load_dotenv
 import requests
-import recognize
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
@@ -35,18 +34,14 @@ async def on_message(message):
 
     if message.content.startswith("Svart"):
         move = "b"
-        print("black")
     elif message.content.startswith("svart"):
         move ="b"
-        print("blacker")
     elif message.content.startswith("Vit"):
         move = "w"
-        print("white")
     elif message.content.startswith("vit"):
         move="w"
         print("whiter")
     else:
-        print("buuh")
         move =""
     print(move)
     attachments = message.attachments
