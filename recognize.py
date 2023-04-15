@@ -138,11 +138,15 @@ def report(r, color=False):
         c = colored(quality, 'green') if quality == "OK" else colored(quality, 'red')
     else:
         c = quality
-    print(f'{{"file": "{file}", "confidence": {confidence:0.08f}, "fen": "{fen}", "status": "{c}"}}')
+    print(f'{{"fen": "{fen}"}}')
+    #This saves the FEN into a txt-file that I can access from another script.
+    text_file = open("fentext.txt", "w")
+    text_file.write(fen)
+    text_file.close()
     img = os.path.join('data', r['file'])
     _save_output_html(img, fen, [t for t in r['tile_prob']], confidence)
 
-    return quality
+    return fen
 
 # Limits on piece counts for each side
 # -- this will flag some compositions and unusual situations as bad
@@ -200,9 +204,9 @@ if __name__ == '__main__':
             total += 1
 
         good = (total - bad)/total
-        print()
-        print(f"OK = {total - bad}/{total} === {good*100:.2f}% (optimistic)")
+
 
         end = time.time()
-        print(f"Time taken = {end - start:.3f} seconds")
-        print(f"Prediction rate = {total/(end - start):.0f} images per second")
+        
+        
+
